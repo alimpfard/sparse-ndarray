@@ -8,13 +8,13 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 
 #### Roadmap:
 ## Operations
-[ ] IncrementAt
+[] IncrementAt
 
 ## Arithmetic
-[ ] Addition / Subtraction
-[ ] Multiplication (research how to multiply spaces)
-[ ] reduce one dimension by a given funcion
+[] Addition / Subtraction
+[] Multiplication (research how to multiply spaces)
+[] reduce one dimension by a given funcion
 
 ## Memory Operations
-[ ] copy
-[ ] CCS compress
+[] copy
+[] CCS compress
