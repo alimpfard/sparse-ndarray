@@ -3,8 +3,8 @@
 This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based off of GSL's SPMatrix.
 
 #### Things implemented:
-    + alloc/free
-    + get/set/ptr
++ alloc/free
++ get/set/ptr
 
 #### Roadmap:
 ## Operations
