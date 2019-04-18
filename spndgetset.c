@@ -6,6 +6,32 @@
 
 static void *tree_find(const spndarray *m, const size_t ndim, const size_t* idxs);
 
+void spndarray_incr(spndarray *m, const size_t *idxs) {
+  if (m->nz == 0) {
+    spndarray_set(m, 1.0, idxs); // degenerate case
+    return;
+  }
+
+  // out of order...?
+  for (size_t i = 0; i < m->ndim; i++)
+      if (idxs[i] >= m->dimsizes[i])
+        return (void) spndarray_set(m, 1.0, idxs);
+
+      if (SPNDARRAY_ISNTUPLE(m)) {
+          double *ptr = spndarray_ptr(m, idxs);
+          if (!ptr)
+            return (void) spndarray_set(m, 1.0, idxs);
+
+          ++*ptr;
+
+          return;
+      } else {
+          // TODO
+          fprintf(stderr, "Not implemented");
+          abort();
+      }
+}
+
 double spndarray_get(const spndarray *m, const size_t *idxs) {
     if (m->nz == 0)
         return 0.0;
@@ -39,7 +65,7 @@ int spndarray_set(spndarray *m, const double x, const size_t* idxs) {
 
         /*
          * just set the data element to 0; it'd be simple to
-         * delete the node from the avl tree, but deleting the 
+         * delete the node from the avl tree, but deleting the
          * data from ->data is not so simple
          */
         if (ptr)
@@ -96,7 +122,7 @@ double *spndarray_ptr (const spndarray *m, const size_t* idxs) {
 static void *tree_find(const spndarray *m, const size_t ndim, const size_t *idxs) {
     const struct avl_table *tree = (struct avl_table *) m->tree_data->tree;
     const struct avl_node *p;
-    
+
     for (p = tree->avl_root; p != NULL; ) {
         size_t n = (double *) p->avl_data - m->data;
         size_t pi[ndim];

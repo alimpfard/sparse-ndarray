@@ -111,8 +111,8 @@ int spndarray_setv(spndarray *m, double val, ...);
 double *spndarray_ptr(const spndarray *m, const size_t *idxs);
 double *spndarray_ptrv(const spndarray *m, ...);
 
-void spndarray_incr(const spndarray *m, const size_t *idxs);
-void spndarray_incrv(const spndarray *m, ...);
+void spndarray_incr(spndarray *m, const size_t *idxs);
+void spndarray_incrv(spndarray *m, ...);
 
 // TODO compress, io, operations, prop, swap
 

@@ -11,7 +11,7 @@ static void avl_spfree(void *block, void *param);
 static struct libavl_allocator avl_allocator_spndarray = { avl_spmalloc, avl_spfree };
 
 __attribute__((always_inline))
-const static inline size_t array_mul(const size_t len, const size_t* arr) {
+static inline size_t array_mul(const size_t len, const size_t* arr) {
     size_t prod = 1;
     for (size_t i = 0; i < len; i++)
         prod *= arr[i];
@@ -57,7 +57,7 @@ spndarray *spndarray_alloc_nzmax(const size_t ndims, const size_t *dimsizes,
         if (dimsizes[i] == 0) {
             fprintf(stderr, "dimension %zd must be a positive integer", i);
             abort();
-        } else 
+        } else
             dimss[i] = dimsizes[i];
 
     m = calloc(1, sizeof(*m));
@@ -74,7 +74,7 @@ spndarray *spndarray_alloc_nzmax(const size_t ndims, const size_t *dimsizes,
 
     m->dims = calloc(ndims, sizeof(size_t*));
     if (!m->dims) {
-        // error 
+        // error
         abort();
     }
 
@@ -101,7 +101,7 @@ spndarray *spndarray_alloc_nzmax(const size_t ndims, const size_t *dimsizes,
             if (!m->dims[i]) {
                 fprintf(stderr, "Not enough space for dimension %zd indices", i);
                 abort();
-            }       
+            }
         }
     } else if (flags == SPNDARRAY_CCS) {
         // TODO
@@ -217,13 +217,13 @@ size_t spndarray_nnz(const spndarray *m) {
 
 /*
  * spndarray_compare_idx()
- * Comparison function for searching the binary tree 
+ * Comparison function for searching the binary tree
  * in ntuple format
- * 
+ *
  * To detect duplicate elements in the tree, we want to determine
  * if there already exists an entry for (i0,i1,...) in the tree.
  * Since the actual tree node stores only the data elements data[n],
- * we will do pointer magick to get from the given data[n] to the 
+ * we will do pointer magick to get from the given data[n] to the
  * indices in dims[...][n].
  *
  * This compare function will sort the tree first by dim 0,
@@ -251,7 +251,7 @@ int spndarray_compare_idx(const size_t ndims, const size_t* ipa, const size_t* i
 
 /*
  * spndarray_tree_rebuild()
- * When copying a ntuple array, it is necessary to rebuild 
+ * When copying a ntuple array, it is necessary to rebuild
  * the binary tree for element searches
  *
  * Input : m - ntuple array
@@ -280,13 +280,13 @@ int spndarray_tree_rebuild(spndarray *m) {
 
 /*
  * compare_ntuple()
- * Comparison function for searching binary tree in 
+ * Comparison function for searching binary tree in
  * ntuple format representation.
  *
  * To detect duplicate entries in the tree, we want
  * to determine if there already exists an entry for (i0,i1,...)
- * in the tree. Since the actual tree node stores only the data 
- * elements data[n], we will do pointer magick to get from the 
+ * in the tree. Since the actual tree node stores only the data
+ * elements data[n], we will do pointer magick to get from the
  * given data[n] to the indices dims[...][n]
  *
  * This compare function will sort the tree first by dim 0,
@@ -320,7 +320,7 @@ avl_spmalloc (size_t size, void *param) {
     // m->tree_data->n keeps track of the next open slot
     if (m->tree_data->n < m->nzmax) {
         unsigned char *node_ptr = (unsigned char *) m->tree_data->node_array;
-        
+
         // offset in bytes for the next node slot
         size_t offset = (m->tree_data->n)++ * sizeof(struct avl_node);
 
@@ -334,7 +334,7 @@ avl_spmalloc (size_t size, void *param) {
     }
 }
 
-static void 
+static void
 avl_spfree (void *block, void *params) {
     (void) block;
     (void) params;
