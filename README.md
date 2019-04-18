@@ -8,7 +8,7 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 
 #### Roadmap:
 ## Operations
-- [ ] IncrementAt
+- [X] IncrementAt
 
 ## Arithmetic
 - [ ] Addition / Subtraction
