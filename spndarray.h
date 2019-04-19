@@ -81,6 +81,8 @@ typedef struct {
 #define SPNDARRAY_ISNTUPLE(m) ((m)->sptype == SPNDARRAY_NTUPLE)
 #define SPNDARRAY_ISCCS(m) ((m)->sptype == SPNDARRAY_CCS)
 
+typedef double (*reduction_function)(double acc, double x, int count);
+
 /*
  * Prototypes
  */
@@ -114,6 +116,12 @@ double *spndarray_ptrv(const spndarray *m, ...);
 void spndarray_incr(spndarray *m, const size_t *idxs);
 void spndarray_incrv(spndarray *m, ...);
 
+/* spreduce.c */
+
+double reduce_sum(double acc, double x, int count);
+double reduce_mean(double acc, double x, int count);
+
+spndarray *spndarray_reduce(spndarray *m, const size_t dim, const reduction_function reduce_fn);
 // TODO compress, io, operations, prop, swap
 
 __END_DECLS

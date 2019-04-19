@@ -2,19 +2,22 @@
 
 This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based off of GSL's SPMatrix.
 
-#### Things implemented:
-+ alloc/free
-+ get/set/ptr
-
-#### Roadmap:
-## Operations
+## Roadmap:
+### Operations
+- [X] allocate
+- [X] free
+- [X] get
+- [ ] get variadic
+- [X] set
+- [ ] set variadic
 - [X] IncrementAt
 
-## Arithmetic
-- [ ] Addition / Subtraction
+### Arithmetic
+- [ ] Addition
+- [ ] Subtraction
 - [ ] Multiplication (research how to multiply spaces)
-- [ ] reduce one dimension by a given funcion
+- [X] reduce one dimension by a given funcion
 
-## Memory Operations
+### Memory Operations
 - [ ] copy
 - [ ] CCS compress
