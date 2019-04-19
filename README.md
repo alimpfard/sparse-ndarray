@@ -21,3 +21,12 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 ### Memory Operations
 - [ ] copy
 - [ ] CCS compress
+
+### Fancy Operations
+- [ ] Reshape
+- [ ] Flatten
+- [ ] Partition
+- [ ] Subarray extract
+- [ ] Views
+
+(PRs welcome!)
