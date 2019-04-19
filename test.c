@@ -47,7 +47,7 @@ static void test_reduce() {
   for (int i = 0; i < 2; i++)
     for (int j = 0; j < 10; j++)
       for (int k = 0; k < 10; k++)
-        if (j && (i + k) % j == 0)
+        if (!j || (j && (i + k) % j == 0))
           spndarray_set(m, val[(i + j + k) % 3], (size_t[]){i, j, k});
   spndarray *mm = spndarray_reduce(m, 0, fmean);
   for (int i = 0; i < 2; i++)
