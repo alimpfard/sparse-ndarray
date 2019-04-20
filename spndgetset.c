@@ -9,19 +9,19 @@ static void *tree_find(const spndarray *m, const size_t ndim,
 
 void spndarray_incr(spndarray *m, const size_t *idxs) {
   if (m->nz == 0) {
-    spndarray_set(m, 1.0, idxs); // degenerate case
+    spndarray_set(m, m->fill + 1.0, idxs); // degenerate case
     return;
   }
 
   // out of order...?
   for (size_t i = 0; i < m->ndim; i++)
     if (idxs[i] >= m->dimsizes[i])
-      return (void)spndarray_set(m, 1.0, idxs);
+      return (void)spndarray_set(m, m->fill + 1.0, idxs);
 
   if (SPNDARRAY_ISNTUPLE(m)) {
     double *ptr = spndarray_ptr(m, idxs);
     if (!ptr)
-      return (void)spndarray_set(m, 1.0, idxs);
+      return (void)spndarray_set(m, m->fill + 1.0, idxs);
 
     ++*ptr;
 
@@ -40,12 +40,12 @@ double spndarray_get(const spndarray *m, const size_t *idxs) {
   // out of order...?
   for (size_t i = 0; i < m->ndim; i++)
     if (idxs[i] >= m->dimsizes[i])
-      return 0.0;
+      return m->fill;
 
   if (SPNDARRAY_ISNTUPLE(m)) {
     void *ptr = tree_find(m, m->ndim, idxs);
 
-    double x = ptr ? *(double *)ptr : 0.0;
+    double x = ptr ? *(double *)ptr : m->fill;
 
     return x;
   } else {
@@ -61,7 +61,7 @@ int spndarray_set(spndarray *m, const double x, const size_t *idxs) {
   if (!SPNDARRAY_ISNTUPLE(m)) {
     fprintf(stderr, "array not in ntuple format");
     return 1;
-  } else if (x == 0.0) {
+  } else if (x == m->fill) {
     void *ptr = tree_find(m, m->ndim, idxs);
 
     /*
@@ -70,7 +70,7 @@ int spndarray_set(spndarray *m, const double x, const size_t *idxs) {
      * data from ->data is not so simple
      */
     if (ptr)
-      *(double *)ptr = 0.0;
+      *(double *)ptr = m->fill;
 
     return 0;
   } else {

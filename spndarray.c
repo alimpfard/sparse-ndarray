@@ -119,6 +119,17 @@ spndarray *spndarray_alloc_nzmax(const size_t ndims, const size_t *dimsizes,
 } /* spndarray_alloc_nzmax() */
 
 /*
+ * spndarray_set_fillvalue()
+ * Sets the fill value of the array
+ *
+ * Inputs
+ *  fill - the fill value
+ */
+void spndarray_set_fillvalue(spndarray *m, const double fill) {
+  m->fill = fill;
+} /* spndarray_set_fillvalue() */
+
+/*
  * spndarray_free()
  * Frees the given array
  */

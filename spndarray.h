@@ -58,8 +58,8 @@ typedef struct {
   size_t **dims;
 
   size_t nzmax; /* maximum number of array elements */
-  size_t nz;    /* current number of non-zero elements */
-
+  size_t nz;    /* current number of non-fillvalue elements */
+  double fill;  /* fill value of the array */
   spndarray_tree *tree_data; /* binary tree for sorting N-Tuple data */
 
   /*
@@ -90,6 +90,8 @@ typedef double (*reduction_function)(double acc, double x, int count);
 spndarray *spndarray_alloc(const size_t ndims, const size_t *dimsizes);
 spndarray *spndarray_alloc_nzmax(const size_t ndims, const size_t *dimsizes,
                                  const size_t nzmax, const size_t flags);
+
+void spndarray_set_fillvalue(spndarray *m, const double fill);
 
 void spndarray_free(spndarray *m);
 int spndarray_realloc(const size_t nzmax, spndarray *m);
@@ -124,5 +126,8 @@ double reduce_mean(double acc, double x, int count);
 spndarray *spndarray_reduce(spndarray *m, const size_t dim, const reduction_function reduce_fn);
 // TODO compress, io, operations, prop, swap
 
+/* spndop.c */
+spndarray *spndarray_mul(const spndarray *m, const spndarray *n, const size_t d);
+spndarray *spndarray_add(const spndarray *m, const spndarray *n);
 __END_DECLS
 #endif
