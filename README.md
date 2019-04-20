@@ -11,11 +11,13 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 - [X] set
 - [ ] set variadic
 - [X] IncrementAt
+- [X] Fill value
 
 ### Arithmetic
-- [ ] Addition
+- [X] Addition
 - [ ] Subtraction
-- [ ] Multiplication (research how to multiply spaces)
+- [X] Simple Multiplication
+- [ ] Multiplication with nonzero fill values
 - [X] reduce one dimension by a given funcion
 
 ### Memory Operations
