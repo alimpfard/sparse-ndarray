@@ -60,8 +60,50 @@ static void test_reduce() {
   spndarray_free(mm);
   printf("\n>> %s Finished <<\n\n", __FUNCTION__);
 }
+
+static void test_op() {
+  printf(">> Running %s <<\n\n", __FUNCTION__);
+  const double val[] = {4.454, 32, -12, 2, 3, -1};
+  spndarray *m = spndarray_alloc_nzmax(3, (size_t[]){2, 10, 10}, 10,
+                                       SPNDARRAY_NTUPLE),
+            *n = spndarray_alloc_nzmax(3, (size_t[]){2, 10, 10}, 10,
+                                       SPNDARRAY_NTUPLE);
+  spndarray_set_fillvalue(n, 1);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 10; j++)
+      for (int k = 0; k < 10; k++)
+        if (!j || (j && (i + k) % j == 0)) {
+          spndarray_set(m, val[(i + j + k) % 3], (size_t[]){i, j, k});
+          spndarray_set(n, val[(i + j + k) % 3 + 3], (size_t[]){i, j, k});
+        }
+  spndarray *nm = spndarray_mul(n, m, -1);
+  printf("SPND mul has %zd nonzero elements\n", nm->nz);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 10; j++)
+      for (int k = 0; k < 10; k++)
+        printf("idx %d,%d,%d %03.3f * %03.3f, value got: %03.3f\n", i, j, k,
+               spndarray_get(m, (size_t[]){i, j, k}),
+               spndarray_get(n, (size_t[]){i, j, k}),
+               spndarray_get(nm, (size_t[]){i, j, k}));
+  spndarray_free(nm);
+  nm = spndarray_add(n, m);
+  printf("SPND mul has %zd nonzero elements\n", nm->nz);
+  for (int i = 0; i < 2; i++)
+    for (int j = 0; j < 10; j++)
+      for (int k = 0; k < 10; k++)
+        printf("idx %d,%d,%d %03.3f + %03.3f, value got: %03.3f\n", i, j, k,
+               spndarray_get(m, (size_t[]){i, j, k}),
+               spndarray_get(n, (size_t[]){i, j, k}),
+               spndarray_get(nm, (size_t[]){i, j, k}));
+  spndarray_free(m);
+  spndarray_free(n);
+  spndarray_free(nm);
+  printf("\n>> %s Finished <<\n\n", __FUNCTION__);
+}
+
 int main() {
   test_getset();
   test_incr();
   test_reduce();
+  test_op();
 }
