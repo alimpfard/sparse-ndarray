@@ -82,6 +82,7 @@ typedef struct {
 #define SPNDARRAY_ISCCS(m) ((m)->sptype == SPNDARRAY_CCS)
 
 typedef double (*reduction_function)(double acc, double x, int count);
+typedef double (*double_mapper)(double value);
 
 /*
  * Prototypes
@@ -103,7 +104,7 @@ int spndarray_compare_idx(const size_t ndims, const size_t *adims,
 int spndarray_tree_rebuild(spndarray *m);
 
 /* spndcopy.c */
-int spndarray_memcpy(spndarray *src, spndarray *dst);
+spndarray *spndarray_memcpy(const spndarray *src, spndarray *dst);
 
 /* spndgetset.c */
 double spndarray_get(const spndarray *m, const size_t *idxs);

@@ -87,7 +87,7 @@ static void test_op() {
                spndarray_get(nm, (size_t[]){i, j, k}));
   spndarray_free(nm);
   nm = spndarray_add(n, m);
-  printf("SPND mul has %zd nonzero elements\n", nm->nz);
+  printf("SPND add has %zd nonzero elements\n", nm->nz);
   for (int i = 0; i < 2; i++)
     for (int j = 0; j < 10; j++)
       for (int k = 0; k < 10; k++)
@@ -95,9 +95,15 @@ static void test_op() {
                spndarray_get(m, (size_t[]){i, j, k}),
                spndarray_get(n, (size_t[]){i, j, k}),
                spndarray_get(nm, (size_t[]){i, j, k}));
+  spndarray *copyN = spndarray_memcpy(m, NULL);
+  printf("the fv=%f copy has %zd nonzero elements\n", copyN->fill, copyN->nz);
+  copyN->fill = 4.454; // should ignore them?
+  spndarray *copyV = spndarray_memcpy(m, copyN);
   spndarray_free(m);
   spndarray_free(n);
   spndarray_free(nm);
+  printf("the fv=%f copy has %zd nonzero elements\n", copyV->fill, copyV->nz);
+  spndarray_free(copyV);
   printf("\n>> %s Finished <<\n\n", __FUNCTION__);
 }
 
