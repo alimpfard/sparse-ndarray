@@ -15,13 +15,13 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 
 ### Arithmetic
 - [X] Addition
-- [ ] Subtraction
+- [X] Subtraction
 - [X] Simple Multiplication
 - [ ] Multiplication with nonzero fill values
 - [X] reduce one dimension by a given funcion
 
 ### Memory Operations
-- [ ] copy
+- [X] copy
 - [ ] CCS compress
 
 ### Fancy Operations
