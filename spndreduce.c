@@ -80,3 +80,20 @@ spndarray *spndarray_reduce(spndarray *m, const size_t dim,
   }
   return newm;
 }
+
+/*
+ * spndarray_extract_dimension()
+ *
+ * extract the values of a given dimension
+ *
+ * Inputs
+ *  dim - the dimension to extract
+ */
+spndarray *spndarray_extract_dimension(spndarray *m, size_t dim) {
+  spndarray *ex = spndarray_alloc_nzmax(1, &m->dimsizes[dim], m->dimsizes[dim] * 0.1, SPNDARRAY_NTUPLE);
+  for (size_t i = 0; i < m->nz; i++) {
+    double val = m->data[i];
+    spndarray_set(ex, val, &i);
+  }
+  return ex;
+}

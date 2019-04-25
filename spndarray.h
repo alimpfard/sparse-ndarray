@@ -125,10 +125,15 @@ double reduce_sum(double acc, double x, int count);
 double reduce_mean(double acc, double x, int count);
 
 spndarray *spndarray_reduce(spndarray *m, const size_t dim, const reduction_function reduce_fn);
+spndarray *spndarray_extract_dimension(spndarray *m, const size_t dim);
 // TODO compress, io, operations, prop, swap
+
+/* spndio.c */
+int spndarray_fwrite(const spndarray* m, const char* fmt, const char* filepath, const int sparse);
 
 /* spndop.c */
 spndarray *spndarray_mul(const spndarray *m, const spndarray *n, const size_t d);
+spndarray *spndarray_mul_vec(const spndarray *m, const spndarray *n, const size_t d);
 spndarray *spndarray_add(const spndarray *m, const spndarray *n);
 __END_DECLS
 #endif

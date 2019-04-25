@@ -76,6 +76,47 @@ sizecheck:;
 }
 
 /*
+ * spndarray_mul_vec()
+ *
+ * calculates the dimension-wise multiplication of array ND m and 1D array n
+ * Inputs
+ *  m - first sparse array of size N
+ *  n - second sparse array of size 1
+ *  d - which dimension to multiply over
+ *
+ * Outputs
+ *  m * n
+ *
+ * Notes
+ *  Currently does not support fillvalues other than zero
+ */
+spndarray *spndarray_mul_vec(const spndarray *xm, const spndarray *xn,
+                         const size_t d) {
+  spndarray *res;
+  spndarray *m = (spndarray *)xm;
+  spndarray *n = (spndarray *)xn;
+  if (m->ndim < n->ndim) {
+    void *t = m;
+    m = n;
+    n = t;
+  }
+  if (n->ndim != 1) {
+    fprintf(stderr, "mul_vec requires a one-dimension vector, but got a %zd onr\n",
+            n->ndim);
+    return NULL;
+  }
+  res = spndarray_alloc_nzmax(n->ndim, n->dimsizes, n->nzmax, SPNDARRAY_NTUPLE);
+  size_t midx[m->ndim];
+  for (size_t i = 0; i < m->nz; i++) {
+    size_t ni = &m->data[i] - m->data;
+    for (size_t j = 0; j < m->ndim; j++)
+      midx[j] = m->dims[j][ni];
+    spndarray_set(res, m->data[i] * spndarray_get(n, &m->dims[d][ni]), midx);
+  }
+  return res;
+}
+
+/*
  * spndarray_add()
  *
  * calculates the dimension-wise addition of m and n
