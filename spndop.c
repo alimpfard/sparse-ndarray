@@ -276,3 +276,19 @@ void spndarray_negate(spndarray *m) {
   for (size_t i = 0; i < m->nz; i++)
     m->data[i] = -m->data[i];
 }
+
+
+/*
+ * spndarray_mulinverse()
+ *
+ * applies 1/x for each value in the array, used for division
+ */
+void spndarray_mulinverse(spndarray *m) {
+  if (m->fill == 0.0 && m->nz != array_mul(m->ndim, m->dimsizes, -1)) {
+    fprintf(stderr, "multiplicativeInverse applied to zero will generate inf\n");
+    m->fill = 1.0 / 0.0;
+  }
+
+  for (size_t s = 0; s < m->nz; s++)
+    m->data[s] = 1/m->data[s];
+}

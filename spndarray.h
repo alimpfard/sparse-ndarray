@@ -135,5 +135,7 @@ int spndarray_fwrite(const spndarray* m, const char* fmt, const char* filepath, 
 spndarray *spndarray_mul(const spndarray *m, const spndarray *n, const size_t d);
 spndarray *spndarray_mul_vec(const spndarray *m, const spndarray *n, const size_t d);
 spndarray *spndarray_add(const spndarray *m, const spndarray *n);
+void spndarray_mulinverse(spndarray *m);
+
 __END_DECLS
 #endif
