@@ -17,6 +17,7 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 - [X] Addition
 - [X] Subtraction
 - [X] Simple Multiplication
+- [X] map 1/x
 - [ ] Multiplication with nonzero fill values
 - [X] reduce one dimension by a given funcion
 
@@ -25,6 +26,7 @@ This is a (still incomplete) implementation of Sparse N-Dimensional Arrays based
 - [ ] CCS compress
 
 ### Fancy Operations
+- [X] Extraction of dimensions
 - [ ] Reshape
 - [ ] Flatten
 - [ ] Partition

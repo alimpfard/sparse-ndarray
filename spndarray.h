@@ -125,7 +125,7 @@ double reduce_sum(double acc, double x, int count);
 double reduce_mean(double acc, double x, int count);
 
 spndarray *spndarray_reduce(spndarray *m, const size_t dim, const reduction_function reduce_fn);
-spndarray *spndarray_extract_dimension(spndarray *m, const size_t dim);
+spndarray *spndarray_reduce_dimension(spndarray *m, const size_t dim, const size_t idx);
 // TODO compress, io, operations, prop, swap
 
 /* spndio.c */

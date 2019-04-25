@@ -43,7 +43,7 @@ spndarray *spndarray_mul(const spndarray *xm, const spndarray *xn,
     if (d != (size_t)-1) // intended underflow don't kill me
       f = d;
     goto sizecheck;
-  }
+  } else goto nosizecheck;
   if (m->ndim != n->ndim - 1) {
     fprintf(stderr, "mul requires dimensions N and N-1, but got %zd and %zd\n",
             m->ndim, n->ndim);
@@ -59,6 +59,7 @@ sizecheck:;
             ms, ns);
     return NULL;
   }
+  nosizecheck:;
   res = spndarray_alloc_nzmax(n->ndim, n->dimsizes, n->nzmax, SPNDARRAY_NTUPLE);
   size_t midx[m->ndim], nidx[n->ndim];
   // TODO reshape
@@ -101,17 +102,17 @@ spndarray *spndarray_mul_vec(const spndarray *xm, const spndarray *xn,
     n = t;
   }
   if (n->ndim != 1) {
-    fprintf(stderr, "mul_vec requires a one-dimension vector, but got a %zd onr\n",
+    fprintf(stderr, "mul_vec requires a one-dimension vector, but got a %zd one\n",
             n->ndim);
     return NULL;
   }
   res = spndarray_alloc_nzmax(m->ndim, m->dimsizes, m->nzmax, SPNDARRAY_NTUPLE);
   size_t midx[m->ndim];
   for (size_t i = 0; i < m->nz; i++) {
-    size_t ni = &m->data[i] - m->data;
     for (size_t j = 0; j < m->ndim; j++)
-      midx[j] = m->dims[j][ni];
-    spndarray_set(res, m->data[i] * spndarray_get(n, &m->dims[d][ni]), midx);
+      midx[j] = m->dims[j][i];
+    double nv = spndarray_get(n, &m->dims[d][i]);
+    spndarray_set(res, m->data[i] * nv, midx);
   }
   return res;
 }

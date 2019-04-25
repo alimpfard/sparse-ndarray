@@ -82,18 +82,30 @@ spndarray *spndarray_reduce(spndarray *m, const size_t dim,
 }
 
 /*
- * spndarray_extract_dimension()
+ * spndarray_reduce_dimension()
  *
- * extract the values of a given dimension
+ * reduces the values of a given dimension to only the given index in it
  *
  * Inputs
- *  dim - the dimension to extract
+ *  dim - the dimension to reduce
+ *  idx - the selected index
  */
-spndarray *spndarray_extract_dimension(spndarray *m, size_t dim) {
-  spndarray *ex = spndarray_alloc_nzmax(1, &m->dimsizes[dim], m->dimsizes[dim] * 0.1, SPNDARRAY_NTUPLE);
-  for (size_t i = 0; i < m->nz; i++) {
-    double val = m->data[i];
-    spndarray_set(ex, val, &i);
+spndarray *spndarray_reduce_dimension(spndarray *m, const size_t dim, const size_t idx) {
+  size_t newdims[m->ndim-1];
+  for (size_t t = 0; t < m->ndim-1; t++)
+    newdims[t] = 1;
+  spndarray *ex = spndarray_alloc_nzmax(m->ndim-1, newdims, m->nz * 0.3, SPNDARRAY_NTUPLE);
+  for (size_t x = 0; x < m->nz; x++) {
+    if (m->dims[dim][x] != idx)
+      continue;
+    double val = m->data[x];
+    for (size_t i = 0, j = 0; i < m->ndim; i++, j++) {
+      if (i != dim) {
+        newdims[j] = m->dims[i][x];
+      } else
+        j--;
+    }
+    spndarray_set(ex, val, newdims);
   }
   return ex;
 }
