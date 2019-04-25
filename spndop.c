@@ -105,7 +105,7 @@ spndarray *spndarray_mul_vec(const spndarray *xm, const spndarray *xn,
             n->ndim);
     return NULL;
   }
-  res = spndarray_alloc_nzmax(n->ndim, n->dimsizes, n->nzmax, SPNDARRAY_NTUPLE);
+  res = spndarray_alloc_nzmax(m->ndim, m->dimsizes, m->nzmax, SPNDARRAY_NTUPLE);
   size_t midx[m->ndim];
   for (size_t i = 0; i < m->nz; i++) {
     size_t ni = &m->data[i] - m->data;
